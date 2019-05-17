@@ -35,5 +35,14 @@ class Song
     find_by_name(name) || create(name)
   end
 
+  def new_from_filename(filename)
+    song = Song.new(filename)
+  end
+
+  def create_from_filename(filename)
+    song = Song.new(filename)
+    @@all << song
+  end
+
 
 end
