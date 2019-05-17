@@ -36,17 +36,23 @@ class MusicLibraryController
   end
 
   def list_songs
-    Song.all.sort_by {|song| song.name}.each_with_index(1) {|song, index| puts "#{index}. #{song.artist.name} - #{song.name} - #{song.genre.name}"}
+    Song.all.sort_by{|song| song.name}.each_with_index(1){|song, index| puts "#{index}. #{song.artist.name} - #{song.name} - #{song.genre.name}"}
+  end
+
+  def list_artists
+    Artist.all.sort_by{|artist| artist.name}.each.with_index(1){|artist, index| puts "#{index}. #{artist.name}"}
   end
 
   def list_genres
-    Genre.all.sort {|a,b| a.name <=> b.name}.each_with_index {|genre, i| puts "#{i + 1}. #{genre.name}"}
+    Genre.all.sort_by{|genre| genre.name}.each.with_index(1){|genre, index| puts "#{index}. #{genre.name}"}
   end
 
   def list_songs_by_artist
     puts "Please enter the name of an artist:"
     artist = gets.strip
-    Song.all.delete_if {|song| song if song.artist.name != artist}.sort {|a, b| a.name <=> b.name}.each_with_index {|song, i| puts "#{i + 1}. #{song.name} - #{song.genre.name}"}
+    if artist = Artist.find_by_name(artist)
+      artist.songs.sort_by{|song| song.name}.each.with_index(1){|song, index| puts "#{index}. #{song.name} - #{song.genre.name}"}
+    end
   end
 
 end
